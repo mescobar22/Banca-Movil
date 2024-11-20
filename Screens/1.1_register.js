@@ -1,4 +1,5 @@
-import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar} from "react-native";
+/* Falta añadir el boton de regresar a la ventana anterior */
+import { Text, TouchableOpacity, Image, TextInput, View, StyleSheet, StatusBar} from "react-native";
 
 export default function Register() {
   return (
@@ -6,7 +7,7 @@ export default function Register() {
       <Text style={styles.txt_1}>Banca</Text>
       <Text style={styles.txt_2}>móvil</Text>
       <View style={styles.border}>
-        <Text style={styles.txt_3}>Register</Text>
+        <Text style={styles.txt_3}>Sign-up</Text>
         <TextInput
           style={styles.input}
           placeholder=" Name"
@@ -28,13 +29,14 @@ export default function Register() {
           placeholderTextColor="#abb3c1"
         ></TextInput>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.text_button}>Sign Up</Text>
+          <Text style={styles.text_button}>Register</Text>
         </TouchableOpacity>
         <StatusBar style="auto" />
       </View>
     </View>
   );
 }
+//CSS
 const styles = StyleSheet.create({
   container: {
     padding: 80,
@@ -65,6 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: "bold",
     color: "#ffffff",
+    marginBottom: 25,
   },
   txt_3: {
     fontSize: 35,
@@ -93,4 +96,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#ffffff",
   },
+  quit_icon: {
+    fontSize: 20,
+  }
 });

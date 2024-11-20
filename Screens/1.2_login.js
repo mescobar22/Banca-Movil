@@ -1,3 +1,4 @@
+/* Falta añadir el boton de regresar a la ventana anterior */
 import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar} from "react-native";
 
 export default function Login() {
@@ -28,6 +29,7 @@ export default function Login() {
     </View>
   );
 }
+//CSS
 const styles = StyleSheet.create({
   container: {
     padding: 80,
