@@ -1,9 +1,12 @@
-// Falta añadir el boton de regresar a la ventana anterior 
-import { Text, TouchableOpacity, Image, TextInput, View, StyleSheet, StatusBar} from "react-native";
+// mejorar el boton
+import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar} from "react-native";
 
 export default function Register() {
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={styles.backButton} onPress={() => alert("Funciona")}>
+        <Text style={styles.backButtonText}>↩</Text>
+      </TouchableOpacity>
       <Text style={styles.txt_1}>Banca</Text>
       <Text style={styles.txt_2}>móvil</Text>
       <View style={styles.border}>
@@ -44,6 +47,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#001b48",
     justifyContent: "flex-start",
     alignItems: "center",
+  },
+  backButton: {
+    position: "absolute",
+    top: 50,
+    right: 20,
+    backgroundColor: "#ffffff",
+    padding: 5,
+    borderRadius: 5,
+    width:"10%",
+  },
+  backButtonText: {
+    fontSize: 20,
+    color: "#001b48",
+    fontWeight: "bold",
+    alignSelf: "center",
   },
   border: {
     flex: 1,
