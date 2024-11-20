@@ -1,4 +1,4 @@
-/* Falta añadir el boton de regresar a la ventana anterior */
+// Falta añadir el boton de regresar a la ventana anterior 
 import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar} from "react-native";
 
 export default function Login() {

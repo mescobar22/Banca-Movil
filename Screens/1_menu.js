@@ -1,4 +1,4 @@
-/* Falta añadir el boton de regresar a la ventana anterior */
+// Falta añadir el boton de regresar a la ventana anterior 
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native";
 
 export default function Menu() {
