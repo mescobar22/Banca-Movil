@@ -15,7 +15,7 @@ import Transfer_Vaucher from './Screens/4.1_transfer_vaucher';
 export default function App() {
   return (
     <View style={ {flex: 1}}>
-      <QR_Vaucher/>
+      <Home/>
       <StatusBar style="auto" />
     </View>
   );

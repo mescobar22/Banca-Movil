@@ -1,9 +1,15 @@
-// Falta añadir el boton de regresar a la ventana anterior 
+// Comprobación de la estructura de css ver si es correcta y la funcionalidad de el botón
+
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native";
 
 export default function Home() {
   return (
     <View style={styles.container}>
+
+      <TouchableOpacity style={styles.backButton} onPress={() => alert("Funciona")}>
+        <Text style={styles.backButtonText}>↩︎</Text>
+      </TouchableOpacity>  
+
       <Text style={styles.txt_1}>Hello</Text>
       <Text style={styles.txt_2}>Name</Text>
       <Text style={styles.txt_3}>Last login:</Text>
@@ -32,6 +38,7 @@ export default function Home() {
         <Text style={styles.txt_7}>Transactions</Text>
         <Text style={styles.txt_8}>⬆ See all</Text>
       </View>
+
       <StatusBar style="auto" />
     </View>
   );
@@ -44,6 +51,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#001b48",
     justifyContent: "flex-start",
     alignItems: "center",
+  },
+  backButton: {
+    position: "absolute",
+    top: 50,
+    right: 5,
+    backgroundColor: "#001b48",
+    borderRadius: 5,
+    width:"20%",
+  },
+  backButtonText: {
+    fontSize: 35,
+    color: "#ffffff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    marginTop: -10,
   },
   txt_1: {
     marginTop: 50,
@@ -64,40 +86,39 @@ const styles = StyleSheet.create({
   txt_4: {
     fontSize: 15,
     color: "#ffffff",
-    marginBottom: 50,
+    marginBottom: 80,
   },
   border: {
     flex: 1,
     alignItems: "center",
-    borderRadius: 10,
     backgroundColor: "#ffffff",
     width: "110%",
-    padding: 20,
+    borderRadius: 10,
+    marginBottom: 300,
   },
   txt_5: {
-    fontSize: 15,
+    fontSize: 16,
     color: "#cacaca",
-    marginEnd: 70,
+    marginTop: 12,
+    marginStart: -45,
   },
   txt_6: {
     color: "#001b48",
     fontWeight: "bold",
-    fontSize: 35,
+    fontSize: 36,
     marginTop: -5,
-    marginLeft: 35,
+    marginStart: 55,
   },
   button_container: {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 120,
-    marginTop: 30,
   },
   row_container: {
+    position: "absolute",
+    bottom: 270,
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "60%",
-    marginBottom: 10,
   },
   button_1: {
     backgroundColor: "#ffffff",
@@ -105,7 +126,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 150,
     padding: 10,
-    marginRight:10,
+    marginRight:5,
   },
   button_2: {
     backgroundColor: "#ffffff",
@@ -113,16 +134,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 150,
     padding: 10,
-    marginRight:10,
+    marginLeft:5,
   },
   button_3: {
-    marginTop: 10,
+    bottom: 205,
     backgroundColor: "#ffffff",
     alignItems: "center",
     borderRadius: 10,
     width: 150,
     padding: 10,
-    marginBottom: 100,
   },
   text_button: {
     fontSize:15,
@@ -131,17 +151,15 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   border_2: {
-    flex: 1,
     alignItems: "center",
-    borderTopLeftRadius: 80,
-    borderTopRightRadius: 80,
     backgroundColor: "#ffffff",
     width: "140%",
+    borderTopLeftRadius: 80,
+    borderTopRightRadius: 80,
     padding: 20,
     marginBottom: -40,
   },
   txt_7: {
-    marginTop: 10,
     fontSize: 25,
     color: "#001b48",
     fontWeight: "bold",
