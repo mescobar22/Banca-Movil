@@ -1,39 +1,49 @@
-// mejorar el boton
+// Comprobación de la estructura de css ver si es correcta y la funcionalidad de el boton 
+
 import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar} from "react-native";
 
 export default function Register() {
   return (
     <View style={styles.container}>
+      
       <TouchableOpacity style={styles.backButton} onPress={() => alert("Funciona")}>
-        <Text style={styles.backButtonText}>↩</Text>
+        <Text style={styles.backButtonText}>↩︎</Text>
       </TouchableOpacity>
+
       <Text style={styles.txt_1}>Banca</Text>
       <Text style={styles.txt_2}>móvil</Text>
+
       <View style={styles.border}>
         <Text style={styles.txt_3}>Sign-up</Text>
+
         <TextInput
           style={styles.input}
           placeholder=" Name"
           placeholderTextColor="#abb3c1"
         ></TextInput>
+
         <TextInput
           style={styles.input}
           placeholder=" Last name"
           placeholderTextColor="#abb3c1"
         ></TextInput>
+
         <TextInput
           style={styles.input}
           placeholder=" Email"
           placeholderTextColor="#abb3c1"
         ></TextInput>
+
         <TextInput
           style={styles.input}
           placeholder=" Password"
           placeholderTextColor="#abb3c1"
         ></TextInput>
+
         <TouchableOpacity style={styles.button}>
           <Text style={styles.text_button}>Register</Text>
         </TouchableOpacity>
+
         <StatusBar style="auto" />
       </View>
     </View>
@@ -52,16 +62,16 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 50,
     right: 20,
-    backgroundColor: "#ffffff",
-    padding: 5,
+    backgroundColor: "#001b48",
     borderRadius: 5,
-    width:"10%",
+    width:"20%",
   },
   backButtonText: {
-    fontSize: 20,
-    color: "#001b48",
+    fontSize: 35,
+    color: "#ffffff",
     fontWeight: "bold",
     alignSelf: "center",
+    marginTop: -10,
   },
   border: {
     flex: 1,

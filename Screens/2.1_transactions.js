@@ -1,4 +1,5 @@
-// Falta añadir el boton de regresar a la ventana anterior 
+// Comprobación de la estructura de css ver si es correcta y la funcionalidad de el boton
+
 import React from "react";
 import { Text, View, StyleSheet, StatusBar, TouchableOpacity } from "react-native";
 
@@ -7,7 +8,7 @@ export default function Transactions() {
     <View style={styles.container}>
       
       <TouchableOpacity style={styles.backButton} onPress={() => alert("Funciona")}>
-        <Text style={styles.backButtonText}>↩</Text>
+	      <Text style={styles.backButtonText}>↩︎</Text>
       </TouchableOpacity>
 
       <Text style={styles.txt_1}>Transactions</Text>
@@ -42,17 +43,17 @@ const styles = StyleSheet.create({
   backButton: {
     position: "absolute",
     top: 50,
-    right: 20,
-    backgroundColor: "#ffffff",
-    padding: 5,
+    right: 5,
+    backgroundColor: "#001b48",
     borderRadius: 5,
-    width:"10%",
+    width:"20%",
   },
   backButtonText: {
-    fontSize: 20,
-    color: "#001b48",
+    fontSize: 35,
+    color: "#ffffff",
     fontWeight: "bold",
     alignSelf: "center",
+    marginTop: -10,
   },
   txt_1: {
     marginTop: 100,

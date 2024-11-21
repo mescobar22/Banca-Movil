@@ -1,13 +1,21 @@
-// Falta añadir el boton de regresar a la ventana anterior 
+// Comprobación de la estructura de css ver si es correcta, la funcionalidad de el boton y el QR
+
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native";
 
 export default function QR_Scanner() {
   return (
     <View style={styles.container}>
+
+        <TouchableOpacity style={styles.backButton} onPress={() => alert("Funciona")}>
+	        <Text style={styles.backButtonText}>↩︎</Text>
+        </TouchableOpacity>
+
         <View style={styles.border}></View>
+
         <TouchableOpacity style={styles.button}>
             <Text style={styles.text_button}>Continue ⮕</Text>
         </TouchableOpacity>
+
         <StatusBar style="auto" />
     </View>
     );
@@ -21,6 +29,21 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     marginBottom: -10,
+  },
+  backButton: {
+    position: "absolute",
+    top: 70,
+    right: 15,
+    backgroundColor: "#000000",
+    borderRadius: 5,
+    width:"20%",
+  },
+  backButtonText: {
+    fontSize: 35,
+    color: "#ffffff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    marginTop: -10,
   },
   border: {
     flex: 1,

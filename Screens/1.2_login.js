@@ -1,29 +1,41 @@
-// Falta añadir el boton de regresar a la ventana anterior 
+// Comprobación de la estructura de css ver si es correcta y la funcionalidad de el boton
+
 import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar} from "react-native";
 
 export default function Login() {
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={styles.backButton} onPress={() => alert("Funciona")}>
+	      <Text style={styles.backButtonText}>↩︎</Text>
+      </TouchableOpacity>
+
       <Text style={styles.txt_1}>Banca</Text>
       <Text style={styles.txt_2}>móvil</Text>
       <Text style={styles.txt_3}>Welcome</Text>
+
       <View style={styles.border}>
+        
         <Text style={styles.txt_4}>Log in to</Text>
         <Text style={styles.txt_5}>Your account</Text>
+
         <TextInput
           style={styles.input}
           placeholder=" Email"
           placeholderTextColor="#abb3c1"
         ></TextInput>
+
         <TextInput
           style={styles.input}
           placeholder=" Password"
           placeholderTextColor="#abb3c1"
         ></TextInput>
+
         <Text style={styles.txt_6}>Forgot your password?</Text>
+
         <TouchableOpacity style={styles.button}>
           <Text style={styles.text_button}>Log in</Text>
         </TouchableOpacity>
+
         <StatusBar style="auto" />
       </View>
     </View>
@@ -37,6 +49,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#001b48",
     justifyContent: "flex-start",
     alignItems: "center",
+  },
+  backButton: {
+    position: "absolute",
+    top: 50,
+    right: 20,
+    backgroundColor: "#001b48",
+    borderRadius: 5,
+    width:"20%",
+  },
+  backButtonText: {
+    fontSize: 35,
+    color: "#ffffff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    marginTop: -10,
   },
   border: {
     flex: 1,
