@@ -8,14 +8,16 @@ import Transactions from './Screens/2.1_transactions';
 import QR from './Screens/3_qr';
 import QR_Scanner from './Screens/3.1_qr_scanner';
 import QR_Vaucher from './Screens/3.2_qr_vaucher';
+import Transfer from './Screens/4_transfer';
 import Transfer_Vaucher from './Screens/4.1_transfer_vaucher';
+
 
 
 
 export default function App() {
   return (
     <View style={ {flex: 1}}>
-      <Home/>
+      <Transfer/>
       <StatusBar style="auto" />
     </View>
   );

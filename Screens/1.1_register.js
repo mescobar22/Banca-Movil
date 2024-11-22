@@ -1,4 +1,4 @@
-// Comprobación de la estructura de css ver si es correcta y la funcionalidad de el boton 
+// Comprobación de la estructura de css ver si es correcta y la funcionalidad de el boton, poner en letra unicamente el teclado
 
 import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar} from "react-native";
 
@@ -124,7 +124,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#ffffff",
   },
-  quit_icon: {
-    fontSize: 20,
-  }
 });
