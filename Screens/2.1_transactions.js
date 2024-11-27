@@ -3,11 +3,11 @@
 import React from "react";
 import { Text, View, StyleSheet, StatusBar, TouchableOpacity } from "react-native";
 
-export default function Transactions() {
+export default function Transactions({ navigation }) {
   return (
     <View style={styles.container}>
       
-      <TouchableOpacity style={styles.backButton} onPress={() => alert("Funciona")}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home')}>
 	      <Text style={styles.backButtonText}>↩︎</Text>
       </TouchableOpacity>
 

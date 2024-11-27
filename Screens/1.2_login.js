@@ -1,12 +1,12 @@
-// Comprobación de la estructura de css ver si es correcta y la funcionalidad de el boton, poner en letra unicamente el teclado
+//Validar cuenta mediante el boton de Log in, si no es correcto dejar un mensaje, y si es dejar pasar a la screen "Home"
 
 import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar} from "react-native";
 
-export default function Login() {
+export default function Login({ navigation }) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => alert("Funciona")}>
-	      <Text style={styles.backButtonText}>↩︎</Text>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Menu')}>
+        <Text style={styles.backButtonText}>↩︎</Text>
       </TouchableOpacity>
 
       <Text style={styles.txt_1}>Banca</Text>
@@ -22,17 +22,19 @@ export default function Login() {
           style={styles.input}
           placeholder=" Email"
           placeholderTextColor="#abb3c1"
+          keyboardType="default"
         ></TextInput>
 
         <TextInput
           style={styles.input}
           placeholder=" Password"
           placeholderTextColor="#abb3c1"
+          keyboardType="default"
         ></TextInput>
 
         <Text style={styles.txt_6}>Forgot your password?</Text>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
           <Text style={styles.text_button}>Log in</Text>
         </TouchableOpacity>
 

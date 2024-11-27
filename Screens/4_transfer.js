@@ -1,4 +1,4 @@
-// Iconos / Se mueve las letras al iniciar el teclado del movil
+// Iconos, Se mueve las letras al iniciar el teclado del movil, validar pago con el boton 
 
 import {
   Text,
@@ -9,13 +9,12 @@ import {
   StatusBar,
 } from "react-native";
 
-export default function Transfer() {
+export default function Transfer({ navigation }) {
   return (
     <View style={styles.container}>
       
         <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => alert("Funciona")}>
+        style={styles.backButton} onPress={() => navigation.navigate('Home')}>
             <Text style={styles.backButtonText}>↩︎</Text>
         </TouchableOpacity>
 
@@ -51,7 +50,7 @@ export default function Transfer() {
           <Text style={styles.txt_6}>0/40</Text>
         </View>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Transfer_Vaucher')}>
             <Text style={styles.text_button}>Continue</Text>
         </TouchableOpacity>
 
@@ -130,7 +129,7 @@ const styles = StyleSheet.create({
   },
   row_container: {
     position: "absolute",
-    bottom: 220,
+    bottom: 205,
     flexDirection: "row",
     justifyContent: "space-between",
   },

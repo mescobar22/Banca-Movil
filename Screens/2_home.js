@@ -1,14 +1,14 @@
-// Comprobación de la estructura de css ver si es correcta y la funcionalidad de el botón
+// Cambiar icono al regresar y que sea como cerrar sesión, Añadir icono a lado del dinero
 
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native";
 
-export default function Home() {
+export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
 
-      <TouchableOpacity style={styles.backButton} onPress={() => alert("Funciona")}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Menu')}>
         <Text style={styles.backButtonText}>↩︎</Text>
-      </TouchableOpacity>  
+      </TouchableOpacity> 
 
       <Text style={styles.txt_1}>Hello</Text>
       <Text style={styles.txt_2}>Name</Text>
@@ -22,22 +22,26 @@ export default function Home() {
 
       <View style={styles.button_container}>
         <View style={styles.row_container}>
-          <TouchableOpacity style={styles.button_1}>
+          <TouchableOpacity style={styles.button_1} onPress={() => navigation.navigate('Transfer')}>
             <Text style={styles.text_button}>⬆ Transfer</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button_2}>
-            <Text style={styles.text_button}>⬇ Receive</Text>
+          <TouchableOpacity style={styles.button_2} onPress={() => navigation.navigate('QR_Scanner')}>
+            <Text style={styles.text_button}>QR Scanner</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.button_3}>
+        <TouchableOpacity style={styles.button_3} onPress={() => navigation.navigate('QR')}>
           <Text style={styles.text_button}>Account</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.border_2}>
         <Text style={styles.txt_7}>Transactions</Text>
-        <Text style={styles.txt_8}>⬆ See all</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Transactions')}>
+          <Text style={styles.txt_8}>⬆ See all</Text>
+        </TouchableOpacity>
+        
       </View>
+      
 
       <StatusBar style="auto" />
     </View>
@@ -94,7 +98,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     width: "110%",
     borderRadius: 10,
-    marginBottom: 300,
+    marginBottom: 270,
   },
   txt_5: {
     fontSize: 16,
@@ -116,7 +120,7 @@ const styles = StyleSheet.create({
   },
   row_container: {
     position: "absolute",
-    bottom: 270,
+    bottom: 250,
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -137,7 +141,7 @@ const styles = StyleSheet.create({
     marginLeft:5,
   },
   button_3: {
-    bottom: 205,
+    bottom: 190,
     backgroundColor: "#ffffff",
     alignItems: "center",
     borderRadius: 10,

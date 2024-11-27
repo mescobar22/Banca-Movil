@@ -1,14 +1,14 @@
-// Comprobación de la estructura de css ver si es correcta y la funcionalidad de el boton, poner en letra unicamente el teclado
+//Añadir cuenta en la base de datos, verificar si añadio todo y enviar y dar como respuesta en caso de haberla creado que la cuenta ha sido registrada
 
 import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar} from "react-native";
 
-export default function Register() {
+export default function Register({ navigation }) {
   return (
     <View style={styles.container}>
       
-      <TouchableOpacity style={styles.backButton} onPress={() => alert("Funciona")}>
+    <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Menu')}>
         <Text style={styles.backButtonText}>↩︎</Text>
-      </TouchableOpacity>
+    </TouchableOpacity>
 
       <Text style={styles.txt_1}>Banca</Text>
       <Text style={styles.txt_2}>móvil</Text>
@@ -20,12 +20,14 @@ export default function Register() {
           style={styles.input}
           placeholder=" Name"
           placeholderTextColor="#abb3c1"
+          keyboardType="default"
         ></TextInput>
 
         <TextInput
           style={styles.input}
           placeholder=" Last name"
           placeholderTextColor="#abb3c1"
+          keyboardType="default"
         ></TextInput>
 
         <TextInput
@@ -38,9 +40,10 @@ export default function Register() {
           style={styles.input}
           placeholder=" Password"
           placeholderTextColor="#abb3c1"
+          keyboardType="default"
         ></TextInput>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => alert("Registrado? / Validar")}>
           <Text style={styles.text_button}>Register</Text>
         </TouchableOpacity>
 

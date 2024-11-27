@@ -1,21 +1,21 @@
-// Comprobación de la estructura de css ver si es correcta, la funcionalidad de el boton y el QR
+// QR
 
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native";
 
-export default function QR() {
+export default function QR({ navigation }) {
   return (
     <View style={styles.container}>
-
-        <TouchableOpacity style={styles.backButton} onPress={() => alert("Funciona")}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home')}>
 	        <Text style={styles.backButtonText}>↩︎</Text>
         </TouchableOpacity>
 
         <Text style={styles.txt_1}>Bring the device closer</Text>
         <Text style={styles.txt_2}>to scan QR code</Text>
         
+        <Text style={styles.txt_3}>My QR</Text>
         <View style={styles.border}></View>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('QR_Scanner')}>
             <Text style={styles.text_button}>Start ⮕</Text>
         </TouchableOpacity>
 
@@ -59,13 +59,21 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     marginBottom: 100,
   },
+  txt_3: {
+    position: "absolute",
+    top: 280,
+    fontSize:25,
+    fontWeight: "bold",
+    color: "#ffffff",
+    textDecorationLine: "underline",
+  },
   border: {
     flex: 1,
     alignItems: "center",
     backgroundColor: "#ffffff",
     width: "85%",
-    marginBottom: 135,
-    marginTop: -20,
+    marginBottom: 110,
+    marginTop: -10,
   },
   button: {
     marginTop: -25,

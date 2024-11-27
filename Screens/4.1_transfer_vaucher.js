@@ -1,21 +1,16 @@
-// Comprobación de la estructura de css ver si es correcta y la funcionalidad de el botón, iconos
+// Depende de si la transacción realmente se realizo mostrar la confirmación o su rechazo, iconos
 
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native";
 
-export default function Transfer_Vaucher() {
+export default function Transfer_Vaucher({ navigation }) {
   return (
     <View style={styles.container}>
-
-      <TouchableOpacity style={styles.backButton} onPress={() => alert("Funciona")}>
-	      <Text style={styles.backButtonText}>↩︎</Text>
-      </TouchableOpacity>
-
       <View style={styles.border}>
         <Text style={styles.txt_1}>You have received</Text>
         <Text style={styles.txt_2}>$1000.00</Text>
         <Text style={styles.txt_3}>See receipt</Text>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
           <Text style={styles.text_button}>⬅ Go back</Text>
         </TouchableOpacity>
 

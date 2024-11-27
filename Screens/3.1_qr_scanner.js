@@ -1,18 +1,18 @@
-// Comprobación de la estructura de css ver si es correcta, la funcionalidad de el boton y el QR
+// La funcionalidad de el boton y el QR, validar QR para ir a la screen QR_Vaucher
 
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native";
 
-export default function QR_Scanner() {
+export default function QR_Scanner({ navigation }) {
   return (
     <View style={styles.container}>
 
-        <TouchableOpacity style={styles.backButton} onPress={() => alert("Funciona")}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home')}>
 	        <Text style={styles.backButtonText}>↩︎</Text>
         </TouchableOpacity>
 
         <View style={styles.border}></View>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('QR_Vaucher')}>
             <Text style={styles.text_button}>Continue ⮕</Text>
         </TouchableOpacity>
 

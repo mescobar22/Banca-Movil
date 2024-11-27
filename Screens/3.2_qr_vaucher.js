@@ -1,20 +1,18 @@
-// Comprobación de la estructura de css ver si es correcta y la funcionalidad de el botón, iconos
+// Validar boton, validar icono, iconos
 
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native";
 
-export default function QR_Vaucher() {
+export default function QR_Vaucher({ navigation }) {
   return (
     <View style={styles.container}>
-
-      <TouchableOpacity style={styles.backButton} onPress={() => alert("Funciona")}>
-	      <Text style={styles.backButtonText}>↩︎</Text>
-      </TouchableOpacity>
-
         <Text style={styles.txt_1}>You have received</Text>
         <Text style={styles.txt_2}>$1000.00</Text>
-        <Text style={styles.txt_3}>See receipt</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Transactions')}>
+          <Text style={styles.txt_3}>See receipt</Text>
+        </TouchableOpacity>
+        
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
             <Text style={styles.text_button}>⬅ Go back</Text>
         </TouchableOpacity>
 

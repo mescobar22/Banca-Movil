@@ -1,19 +1,17 @@
-// Lo unico es la estructura de css ver si es correcta
-
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native";
 
-export default function Menu() {
+export default function Menu({ navigation }) {
   return (
     <View style={styles.container}>
 
         <Text style={styles.txt_1}>Banca</Text>
         <Text style={styles.txt_2}>móvil</Text>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Register')}>
             <Text style={styles.text_button}>Sign Up</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
             <Text style={styles.text_button}>Log in</Text>
         </TouchableOpacity>
 
