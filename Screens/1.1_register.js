@@ -34,6 +34,7 @@ export default function Register({ navigation }) {
           style={styles.input}
           placeholder=" Email"
           placeholderTextColor="#abb3c1"
+          keyboardType="email-address"
         ></TextInput>
 
         <TextInput

@@ -32,7 +32,9 @@ export default function Login({ navigation }) {
           keyboardType="default"
         ></TextInput>
 
-        <Text style={styles.txt_6}>Forgot your password?</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <Text style={styles.txt_6}>Don't have an account? Create one</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
           <Text style={styles.text_button}>Log in</Text>

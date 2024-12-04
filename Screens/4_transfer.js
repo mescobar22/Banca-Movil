@@ -1,24 +1,25 @@
-// Iconos, Se mueve las letras al iniciar el teclado del movil, validar pago con el boton 
+// Validar el boton continue y hacer un contador de la cantidad de letras, 0/40
 
-import {
-  Text,
-  TouchableOpacity,
-  TextInput,
-  View,
-  StyleSheet,
-  StatusBar,
-} from "react-native";
+import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar } from "react-native";
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import Feather from '@expo/vector-icons/Feather';
 
 export default function Transfer({ navigation }) {
   return (
     <View style={styles.container}>
-      
-        <TouchableOpacity
-        style={styles.backButton} onPress={() => navigation.navigate('Home')}>
+
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home')}>
             <Text style={styles.backButtonText}>↩︎</Text>
         </TouchableOpacity>
 
         <Text style={styles.txt_1}>Transfer</Text>
+        <View style={styles.row_icons}>
+          <FontAwesome5 name="money-bill" size={35} color="white"/>
+          <View style={styles.icon_arrow_right}>
+            <Feather name="arrow-right" size={35} color="white"/>
+          </View>
+          <FontAwesome5 name="money-check" size={35} color="white"/>
+        </View>
         <Text style={styles.txt_2}>Amount</Text>
 
         <TextInput
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     padding: 80,
     flex: 1,
     backgroundColor: "#001b48",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
   },
   backButton: {
@@ -83,11 +84,21 @@ const styles = StyleSheet.create({
     marginTop: -10,
   },
   txt_1: {
-    marginTop: 50,
+    marginTop: 10,
     marginBottom: 130,
     fontSize: 30,
     fontWeight: "bold",
     color: "#ffffff",
+  },
+  row_icons: {
+    position: "absolute",
+    top:170,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  icon_arrow_right: {
+    marginLeft: 20,
+    marginRight:20,
   },
   txt_2: {
     fontSize: 20,
@@ -128,22 +139,19 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   row_container: {
-    position: "absolute",
-    bottom: 205,
+    marginTop: 5,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   txt_5: {
     fontSize: 9,
     color: "#ffffff",
-    marginTop: 10,
-    marginStart: -160,
+    marginEnd:95,
   },
   txt_6: {
     fontSize: 9,
     color: "#ffffff",
-    marginTop: 10,
-    marginEnd: -160,
+    marginStart: 75,
   },
   button: {
     marginTop: 85,

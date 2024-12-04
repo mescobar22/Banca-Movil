@@ -1,10 +1,15 @@
-// Validar boton, validar icono, iconos
+// Validar si es correcto, cantidad enviada programar con la base de datos, mostrar en transactions el recibo
 
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native";
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import Feather from '@expo/vector-icons/Feather';
 
 export default function QR_Vaucher({ navigation }) {
   return (
     <View style={styles.container}>
+        <View style={styles.icon_1}>
+          <FontAwesome5 name="money-bill" size={50} color="white"/>
+        </View>
         <Text style={styles.txt_1}>You have received</Text>
         <Text style={styles.txt_2}>$1000.00</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Transactions')}>
@@ -13,7 +18,10 @@ export default function QR_Vaucher({ navigation }) {
         
 
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
-            <Text style={styles.text_button}>⬅ Go back</Text>
+          <View style={styles.icon_2}>
+            <Feather name="arrow-left" size={24} color="#001b48"/>
+          </View>
+          <Text style={styles.text_button}>Go back</Text>
         </TouchableOpacity>
 
         <StatusBar style="auto" />
@@ -26,8 +34,16 @@ const styles = StyleSheet.create({
     padding: 80,
     flex: 1,
     backgroundColor: "#001b48",
-    justifyContent: "flex-start",
     alignItems: "center",
+  },
+  icon_1: {
+    position: "absolute",
+    top: 270,
+  },
+  icon_2: {
+    position: "absolute",
+    top: 18,
+    left: 70,
   },
   backButton: {
     position: "absolute",

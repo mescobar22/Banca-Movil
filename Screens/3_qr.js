@@ -1,6 +1,8 @@
-// QR
+// QR añadir
 
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native";
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import Feather from '@expo/vector-icons/Feather';
 
 export default function QR({ navigation }) {
   return (
@@ -13,10 +15,15 @@ export default function QR({ navigation }) {
         <Text style={styles.txt_2}>to scan QR code</Text>
         
         <Text style={styles.txt_3}>My QR</Text>
-        <View style={styles.border}></View>
+        <View style={styles.icon_1}>
+          <MaterialCommunityIcons name="qrcode-scan" size={160} color="white" />
+        </View>
 
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('QR_Scanner')}>
-            <Text style={styles.text_button}>Start ⮕</Text>
+            <View style={styles.icon_2}>
+              <Feather name="arrow-right" size={24} color="#001b48"/>
+            </View>
+            <Text style={styles.text_button}>Start</Text>
         </TouchableOpacity>
 
         <StatusBar style="auto" />
@@ -67,13 +74,12 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     textDecorationLine: "underline",
   },
-  border: {
+  icon_1: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#ffffff",
-    width: "85%",
+    width: "100%",
     marginBottom: 110,
-    marginTop: -10,
+    marginTop: 20,
   },
   button: {
     marginTop: -25,
@@ -83,6 +89,11 @@ const styles = StyleSheet.create({
     width: "120%",
     padding: 15,
     marginBottom: 45,
+  },
+  icon_2: {
+    position: "absolute",
+    top: 18,
+    right: 90,
   },
   text_button: {
     fontSize: 20,
