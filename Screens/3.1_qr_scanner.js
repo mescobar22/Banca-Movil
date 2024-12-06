@@ -3,6 +3,7 @@
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native";
 import Feather from '@expo/vector-icons/Feather';
 
+
 export default function QR_Scanner({ navigation }) {
   return (
     <View style={styles.container}>
