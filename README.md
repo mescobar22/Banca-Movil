@@ -26,8 +26,11 @@ Pasos para la instalacion:
         cd Banca-Movil
         
 2.- Configurar Backend
+
 3.- 
+
 4.- Configurar la base de datos
+
 5.- Levantar el proyecto
 6.- Acceso
   *Accede
