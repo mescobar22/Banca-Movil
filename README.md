@@ -16,27 +16,34 @@ Requisitos previos:
 * Nde.js y npm
 * Git
 * VisualStudioCode
-* *Base de Datos
+* Reac Native
+* MySQL
+* Postman
+* Expo CLI
+* Railway
 
 Pasos para la instalacion:
 
 1.- Clonar el repositorio.
 
-   *Se tiene que ejecutar el siguiente comando en tu terminal para descargar 
+   *Se tiene que ejecutar el siguiente comando en tu terminal para descargar:
         
         git clone https://github.com/mescobar22/Banca-Movil.git
         
-   *y entrar al directorio del proyecto
+   *y entrar al directorio del proyecto:
        
         cd Banca-Movil
         
-2.- Configurar Backend
+2.- Instalar base de datos con el archivo de MySQL.
 
-3.- 
+3.- Verificar que se tenga programado anteriormente el npm, node.js y expo.
 
-4.- Configurar la base de datos
+4.- Configurar la IP local con Postman.
 
-5.- Levantar el proyecto
-6.- Acceso
-  *Accede
+5.- Empezar arrancando el servidor con node app.j.
 
+6.- Empezar arrancando el frontend con npx expo start.
+
+7.- Descargar expo go en el cel.
+
+8.- Escanear codigo.
