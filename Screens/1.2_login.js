@@ -9,7 +9,7 @@ export default function Login({ navigation }) {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("api-bancamovil-production.up.railway.app", {
+      const response = await fetch("https://api-bancamovil-production.up.railway.app/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,7 +29,7 @@ export default function Login({ navigation }) {
       }
     } catch (error) {
       console.error(error);
-      Alert.alert("Error", "Login failed, try again later..");
+      Alert.alert("Error", "Login failed, try again later.");
     }
   };
 

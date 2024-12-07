@@ -11,7 +11,7 @@ export default function Register({ navigation }) {
 
   const handleRegister = async () => {
     try {
-      const response = await fetch("api-bancamovil-production.up.railway.app", {
+      const response = await fetch("https://api-bancamovil-production.up.railway.app/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,10 +30,10 @@ export default function Register({ navigation }) {
         navigation.navigate("Login");
       } else {
         Alert.alert("Error", data.msg);
-      }S
+      }
     } catch (error) {
       console.error(error);
-      Alert.alert("Error", "Your account could not be created, try again later..");
+      Alert.alert("Error", "Your account could not be created, try again later.");
     }
   };
 

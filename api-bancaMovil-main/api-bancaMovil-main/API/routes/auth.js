@@ -13,7 +13,7 @@ const generateQRCode = async(accountId) => {
         const qrCodeImage = await QRCode.toDataURL(qrData);
         return qrCodeImage;
     } catch(err) {
-        console.error('Error al generar el codigo QR');
+        console.error('Error generating the QR code');
     }
 };
 
@@ -25,20 +25,20 @@ router.post('/auth/register', async (req, res) => {
         if (!first_name || !last_name || !email || !password) {
             return res.json({
                 'status': 400,
-                'msg': 'Todos los campos son obligatorios'
+                'msg': 'All fields are required'
             });
         }
         const emailNoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if(!emailNoValido.test(email)) {
             return res.json({
                 'status':400,
-                'msg': 'El email no es valido'
+                'msg': 'The email is not valid'
             });
         }
         if(password.length < 8){
             return res.json({
                 'status':400,
-                'msg': 'La contraseña debe tener al menos 8 caracteres'
+                'msg': 'The password must be at least 8 characters long'
             });
         }
 
@@ -52,7 +52,7 @@ router.post('/auth/register', async (req, res) => {
         if (existingUser.length > 0) {
             return res.json({
                 'status': 400,
-                'msg': 'El email ya está registrado'
+                'msg': 'The email is already registered'
             });
         }
 
@@ -76,7 +76,7 @@ router.post('/auth/register', async (req, res) => {
         await db.commit();
         res.json({
             'status': 200,
-            'msg': 'Usuario creado correctamente',
+            'msg': 'User created successfully',
             'user_id': userId,
             'account_id': accountResult.insertId,
             'initial_balance': BASE_BALANCE
@@ -86,7 +86,7 @@ router.post('/auth/register', async (req, res) => {
         console.error(err);
         res.json({
             'status': 500,
-            'msg': 'Error en el servidor'
+            'msg': 'Server error'
         });
     }
 });
@@ -100,7 +100,7 @@ router.post('/auth/login', async (req, res) => {
         if(!email || !password){
             return res.json({
                 'status':400,
-                'msg': 'Todos los campos son obligatorios'
+                'msg': 'All fields are required'
             });
         } db = await connect();
         
@@ -113,18 +113,18 @@ router.post('/auth/login', async (req, res) => {
         if(row.length === 0){
             return res.json({
                 'status':404,
-                'msg': 'No existe usuario con este email'
+                'msg': 'There is no user with this email'
             });
         } 
         const user =row[0];
         const hashPassword = user.password;
         const passwordValid = await bcrypt.compare(password, hashPassword);
-        console.log("Resultado de la comparación:", passwordValid);
+        console.log("Comparison result:", passwordValid);
 
         if(!passwordValid) {
             return res.json({
                 'status': 401,
-                'msg': 'Contraseña incorrecta',
+                'msg': 'Incorrect password',
                 'token': null
         });
         } const token = jwt.sign(
@@ -142,7 +142,7 @@ router.post('/auth/login', async (req, res) => {
             res.json({
                 'status': 200,
                 'token': token, 
-                'msg': 'Inicio de sesion exitosa',
+                'msg': 'Login successful',
             });
         } catch(err) {
             console.log(err);
