@@ -1,11 +1,41 @@
 //Validar cuenta mediante el boton de Log in, si no es correcto dejar un mensaje, y si es dejar pasar a la screen "Home"
 
-import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar} from "react-native";
+import React, { useState } from "react";
+import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar, Alert } from "react-native";
 
 export default function Login({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("api-bancamovil-production.up.railway.app", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+      const data = await response.json();
+
+      if (data.status === 200) {
+        Alert.alert("Successful login", "Welcome to your account.");
+        navigation.navigate("Home");
+      } else {
+        Alert.alert("Error", data.msg);
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", "Login failed, try again later..");
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Menu')}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("Menu")}>
         <Text style={styles.backButtonText}>↩︎</Text>
       </TouchableOpacity>
 
@@ -14,29 +44,30 @@ export default function Login({ navigation }) {
       <Text style={styles.txt_3}>Welcome</Text>
 
       <View style={styles.border}>
-        
         <Text style={styles.txt_4}>Log in to</Text>
         <Text style={styles.txt_5}>Your account</Text>
 
         <TextInput
           style={styles.input}
-          placeholder=" Email"
+          placeholder="Email"
           placeholderTextColor="#abb3c1"
-          keyboardType="default"
-        ></TextInput>
-
+          value={email}
+          onChangeText={setEmail}
+        />
         <TextInput
           style={styles.input}
-          placeholder=" Password"
+          placeholder="Password"
           placeholderTextColor="#abb3c1"
-          keyboardType="default"
-        ></TextInput>
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
 
-        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
           <Text style={styles.txt_6}>Don't have an account? Create one</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.text_button}>Log in</Text>
         </TouchableOpacity>
 

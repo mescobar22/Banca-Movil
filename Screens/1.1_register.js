@@ -1,14 +1,47 @@
 //Añadir cuenta en la base de datos, verificar si añadio todo y enviar y dar como respuesta en caso de haberla creado que la cuenta ha sido registrada
 
-import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar} from "react-native";
+import React, { useState } from "react";
+import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar, Alert } from "react-native";
 
 export default function Register({ navigation }) {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleRegister = async () => {
+    try {
+      const response = await fetch("api-bancamovil-production.up.railway.app", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          password,
+        }),
+      });
+      const data = await response.json();
+
+      if (data.status === 200) {
+        Alert.alert("Successful registration", "Your account was created.");
+        navigation.navigate("Login");
+      } else {
+        Alert.alert("Error", data.msg);
+      }S
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", "Your account could not be created, try again later..");
+    }
+  };
+
   return (
     <View style={styles.container}>
-      
-    <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Menu')}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("Menu")}>
         <Text style={styles.backButtonText}>↩︎</Text>
-    </TouchableOpacity>
+      </TouchableOpacity>
 
       <Text style={styles.txt_1}>Banca</Text>
       <Text style={styles.txt_2}>móvil</Text>
@@ -18,33 +51,35 @@ export default function Register({ navigation }) {
 
         <TextInput
           style={styles.input}
-          placeholder=" Name"
+          placeholder="Name"
           placeholderTextColor="#abb3c1"
-          keyboardType="default"
-        ></TextInput>
-
+          value={firstName}
+          onChangeText={setFirstName}
+        />
         <TextInput
           style={styles.input}
-          placeholder=" Last name"
+          placeholder="Last name"
           placeholderTextColor="#abb3c1"
-          keyboardType="default"
-        ></TextInput>
-
+          value={lastName}
+          onChangeText={setLastName}
+        />
         <TextInput
           style={styles.input}
-          placeholder=" Email"
+          placeholder="Email"
           placeholderTextColor="#abb3c1"
-          keyboardType="email-address"
-        ></TextInput>
-
+          value={email}
+          onChangeText={setEmail}
+        />
         <TextInput
           style={styles.input}
-          placeholder=" Password"
+          placeholder="Password"
           placeholderTextColor="#abb3c1"
-          keyboardType="default"
-        ></TextInput>
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
 
-        <TouchableOpacity style={styles.button} onPress={() => alert("Registrado? / Validar")}>
+        <TouchableOpacity style={styles.button} onPress={handleRegister}>
           <Text style={styles.text_button}>Register</Text>
         </TouchableOpacity>
 
