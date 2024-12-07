@@ -16,13 +16,14 @@ Requisitos previos:
 * Nde.js y npm
 * Git
 * VisualStudioCode
-*Base de Datos
+* *Base de Datos
 
 Pasos para la instalacion:
 1.- Clonar el repositorio.
   *Se tiene que ejecutar el siguiente comando en tu terminal para descargar 
         git clone https://github.com/mescobar22/Banca-Movil.git
-  *y entrar al directorio del proyecto
+        
+   *y entrar al directorio del proyecto
         cd Banca-Movil
         
 2.- Configurar Backend
