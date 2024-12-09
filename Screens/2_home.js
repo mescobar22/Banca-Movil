@@ -1,4 +1,7 @@
 // En "Name" debe de ir el nombre del usuario, junto con la fecha de la ultima transaccion en "Last login", el dinero debe ser basado en lo que hay en la base de datos
+//En el boton Transfer tuve que cambiar a la ventana de escaneo porque 
+//Para hacer la transferencia se ocupan amount, concept y qr_id y sin esta ultima
+//no me dejaba continuar en la ventana Transfer.
 
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native";
 import Entypo from '@expo/vector-icons/Entypo';
@@ -28,13 +31,13 @@ export default function Home({ navigation }) {
 
       <View style={styles.button_container}>
         <View style={styles.row_container}>
-          <TouchableOpacity style={styles.button_1} onPress={() => navigation.navigate('Transfer')}>
+          <TouchableOpacity style={styles.button_1} onPress={() => navigation.navigate('QR_Scanner')}>
             <View style={styles.icon_2}>
               <Feather name="arrow-up" size={20} color="black"/>
             </View>
             <Text style={styles.text_button}>Transfer</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button_2} onPress={() => navigation.navigate('QR_Scanner')}>
+          <TouchableOpacity style={styles.button_2} onPress={() => navigation.navigate('QR')}>
             <View style={styles.icon_3}>
               <MaterialCommunityIcons name="qrcode-scan" size={20} color="black"/> 
             </View> 

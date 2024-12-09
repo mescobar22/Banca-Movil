@@ -22,7 +22,8 @@
     "react-native-qrcode-svg": "^6.3.12",
     "react-native-reanimated": "^3.16.3",
     "react-native-svg": "^15.8.0",
-    "react-native-vision-camera": "^4.6.3"
+    "react-native-vision-camera": "^4.6.3",
+    "expo-secure-store": "~14.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

@@ -1,11 +1,36 @@
-// QR añadir
+//Al agregar los datos con la API dejo de generar el codigo y no logre hacerlo funcionar
 
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Feather from '@expo/vector-icons/Feather';
 import QRCode from 'react-native-qrcode-svg';
+import React, { useState, useEffect } from "react";
 
 export default function QR({ navigation }) {
+  const [qr_id, setQrData] = useState(null); 
+  const [loading, setLoading] = useState(true); 
+
+  
+  useEffect(() => {
+    const fetchQrData = async () => {
+      try {
+        const response = await fetch("https://api-bancamovil-production.up.railway.app/users/qr_codes");
+        const data = await response.json();
+        if (data.qr_id) {
+          setQrData(data.qr_id); 
+        } else {
+          console.log("No QR data found");
+        }
+      } catch (error) {
+        console.error("Error fetching qr_data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchQrData();
+  }, []);
+
   return (
     <View style={styles.container}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home')}>
@@ -19,12 +44,19 @@ export default function QR({ navigation }) {
           <View style={styles.icon_1}>
             <MaterialCommunityIcons name="qrcode-scan" size={200} color="white" />
           </View>
+
           <View style={styles.qr}>
-            <QRCode 
-              value="Texto o URL estática aquí" 
-              size={150} 
-              backgroundColor="white"
-            />
+            {loading ? (
+              <Text style={styles.errorText}>Loading QR...</Text>
+            ) : qr_id ? (
+              <QRCode 
+                value={`qr_id:${qr_id}`} 
+                size={150} 
+                backgroundColor="white"
+              />
+            ) : (
+              <Text style={styles.errorText}>Error loading QR data</Text>
+            )}
           </View>
 
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('QR_Scanner')}>

@@ -1,10 +1,42 @@
-// Validar el boton continue y hacer un contador de la cantidad de letras, 0/40
+// Validar el boton continue y hacer un contador de la cantidad de letras, 0/40. Aun falta que guarde los datos.
 
-import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar } from "react-native";
+import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar, Alert } from "react-native";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Feather from '@expo/vector-icons/Feather';
+import React, { useState } from "react";
 
-export default function Transfer({ navigation }) {
+export default function Transfer({ route, navigation }) {
+  const { qrId } = route.params;
+  const [amount, setAmount] = useState("");
+  const [concept, setConcept] = useState("");
+
+  const handleContinue = () => {
+    if (!amount || !concept) {
+      Alert.alert("Error", "Please fill in all fields");
+      return;
+    }
+
+    fetch("https://api-bancamovil-production.up.railway.app/transfer", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount, concept, qr_id: qrId }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        Alert.alert("Success", "Transfer completed successfully", [
+          {
+            text: "OK",
+            onPress: () => navigation.navigate("QR_Vaucher"),
+          },
+        ]);
+      })
+      .catch((error) => {
+        console.error(error);
+        Alert.alert("Error", "Something went wrong.");
+      });
+  };
+
   return (
     <View style={styles.container}>
 
@@ -51,7 +83,7 @@ export default function Transfer({ navigation }) {
           <Text style={styles.txt_6}>0/40</Text>
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Transfer_Vaucher')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('QR_Vaucher')}>
             <Text style={styles.text_button}>Continue</Text>
         </TouchableOpacity>
 

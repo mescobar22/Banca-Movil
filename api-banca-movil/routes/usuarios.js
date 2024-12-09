@@ -2,6 +2,7 @@ const { Router } = require('express');
 const connect = require('../db');
 const router = Router();
 const authVerify = require('../middleware/authVerify');
+const fetch = require('node-fetch');
 
 router.get('/users', async (req, res) =>{
     let db;
@@ -23,7 +24,43 @@ router.get('/users', async (req, res) =>{
     }
 });
 
+//Para obtener los datos de qr_id
+router.get('/users/qr_codes', async(req, res) => {
+    let db;
+    try{
+        const account_id = req.body.account_id || req.query.account_id || req.params.account_id;
 
+        if (!account_id) {
+            return res.status(400).json({
+                status: 400,
+                msg: 'All fields are required',
+            });
+        }
+        db = await connect();
+        const query = 'SELECT qr_id, qr_data FROM qr_codes WHERE account_id = ?';
+        const [rows] = await db.execute(query, [account_id]);
+
+
+        if(rows.length > 0) {
+            const qrData = rows[0];
+            return res.json({
+                'status': 200,
+                'users': {rows},
+            });
+        } else {
+            return res.json({
+                'status':400,
+                'msg': 'No QR found',
+            });
+        }
+    } catch(err) {
+        console.error('Error obtaining QR data:', err);
+        return res.json({
+            'status':500,
+            'msg': 'Error'
+        });
+    }
+});
 
 //Email
 router.get('/users/:email', async (req, res) => {
