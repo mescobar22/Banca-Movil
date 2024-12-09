@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar, Alert } from "react-native";
+import * as SecureStore from 'expo-secure-store';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
@@ -22,6 +23,21 @@ export default function Login({ navigation }) {
       const data = await response.json();
 
       if (data.status === 200) {
+        await SecureStore.setItemAsync("userToken", data.token);
+    
+        if (data.account_id !== undefined && data.account_id !== null) {
+            await SecureStore.setItemAsync("accountID", data.account_id.toString());
+        } else {
+            console.warn("account_id is missing in the response");
+        }
+    
+        if (data.qr_id !== undefined && data.qr_id !== null) {
+            await SecureStore.setItemAsync("qrID", data.qr_id.toString());
+        } else {
+            console.warn("qr_id is missing in the response");
+        }
+
+      //if (data.status === 200) {
         Alert.alert("Successful login", "Welcome to your account.");
         navigation.navigate("Home");
       } else {

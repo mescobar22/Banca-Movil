@@ -7,9 +7,62 @@ import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native
 import Entypo from '@expo/vector-icons/Entypo';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-
+import * as SecureStore from "expo-secure-store";
+import React, { useState, useEffect } from "react";
 
 export default function Home({ navigation }) {
+
+  const [accountID, setAccountID] = useState(null);
+  const [qrID, setQrID] = useState(null);
+  const [name, setName] = useState("User");
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+          const token = await SecureStore.getItemAsync("userToken");
+          if (!token) {
+              Alert.alert("Session expired", "Please log in again.");
+              navigation.navigate("Login");
+              return;
+          }
+
+          const response = await fetch("https://api-bancamovil-production.up.railway.app/user/details", {
+              method: "GET",
+              headers: {
+                  "Content-Type": "application/json",
+                  Authorization: token,
+              },
+          });
+
+          const data = await response.json();
+
+          if (data.status === 200) {
+              setName(data.name);
+              setAccountID(data.account_id);
+              setQrID(data.qr_id);
+          } else {
+              Alert.alert("Error", data.msg);
+              navigation.navigate("Login");
+          }
+      } catch (error) {
+          console.error("Error getting user details:", error);
+          Alert.alert("Error", "Try later.");
+          navigation.navigate("Login");
+      }
+  };
+
+  fetchUserDetails();
+  }, []);
+
+  const handleLogout = async () => {
+    await SecureStore.deleteItemAsync("userToken");
+    await SecureStore.deleteItemAsync("accountID");
+    await SecureStore.deleteItemAsync("qrID");
+    Alert.alert("Logged out", "You have successfully logged out.");
+    navigation.navigate("Login");
+  };
+
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Menu')}>
