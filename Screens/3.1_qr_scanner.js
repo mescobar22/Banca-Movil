@@ -47,7 +47,6 @@ export default function QR_Scanner({ navigation }) {
     <View style={styles.container}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home')}>
 	        <Text style={styles.backButtonText}>↩︎</Text>
-        
         </TouchableOpacity>
 
         <View style={styles.border}></View>
@@ -68,16 +67,6 @@ export default function QR_Scanner({ navigation }) {
             }
           }}
         />
-
-        
-
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Transfer')}>
-          <View style={styles.icon_1}>
-            <Feather name="arrow-right" size={24} color="#001b48"/>
-          </View>
-          <Text style={styles.text_button}>Continue</Text>
-        </TouchableOpacity>
-
         <StatusBar style="auto" />
     </View>
     );

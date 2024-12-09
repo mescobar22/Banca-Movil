@@ -18,15 +18,13 @@ export default function Home({ navigation }) {
 
       <Text style={styles.txt_1}>Hello</Text>
       <Text style={styles.txt_2}>Name</Text>
-      <Text style={styles.txt_3}>Last login:</Text>
-      <Text style={styles.txt_4}>11.11.2024 11.11.11 Via Mobile</Text>
 
       <View style={styles.border}>
         <View style={styles.icon_1}>
           <Entypo name="wallet" size={50} color="#001b48"/>
         </View>
-        <Text style={styles.txt_5}>Available Balance</Text>
-        <Text style={styles.txt_6}>$200,000 MXN</Text>
+        <Text style={styles.txt_3}>Available Balance</Text>
+        <Text style={styles.txt_4}>$200,000 MXN</Text>
       </View>
 
       <View style={styles.button_container}>
@@ -93,8 +91,8 @@ const styles = StyleSheet.create({
     marginTop: -10,
   },
   txt_1: {
-    marginTop: 50,
-    marginBottom: -6,
+    marginTop: 100,
+    marginBottom: 10,
     fontSize: 30,
     fontWeight: "bold",
     color: "#ffffff",
@@ -102,6 +100,7 @@ const styles = StyleSheet.create({
   txt_2: {
     fontSize: 25,
     color: "#ffffff",
+    marginBottom: 70,
   },
   txt_3: {
     marginTop: 20,
@@ -126,13 +125,13 @@ const styles = StyleSheet.create({
     top: 25,
     left: 15,
   },
-  txt_5: {
+  txt_3: {
     fontSize: 16,
     color: "#cacaca",
     marginTop: 12,
     marginStart: -45,
   },
-  txt_6: {
+  txt_4: {
     color: "#001b48",
     fontWeight: "bold",
     fontSize: 36,
