@@ -3,64 +3,60 @@
 //Para hacer la transferencia se ocupan amount, concept y qr_id y sin esta ultima
 //no me dejaba continuar en la ventana Transfer.
 
-import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native";
+import { Text, TouchableOpacity, View, StyleSheet, StatusBar, Alert} from "react-native";
 import Entypo from '@expo/vector-icons/Entypo';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as SecureStore from "expo-secure-store";
 import React, { useState, useEffect } from "react";
 
-export default function Home({ navigation }) {
 
+export default function Home({ navigation, route }) {
+  const [name, setName] = useState(null);
   const [accountID, setAccountID] = useState(null);
   const [qrID, setQrID] = useState(null);
-  const [name, setName] = useState("User");
+  const [storedQrID, setStoredQrId] = useState(null);
+  const [storedQrData, setStoredQrData] = useState(null);
+  const [token, setToken] = useState(null);
+
+  const { qr_id, qr_data} = route.params || {};
 
   useEffect(() => {
-    const fetchUserDetails = async () => {
+    
+    const loadUserData = async () => {
       try {
-          const token = await SecureStore.getItemAsync("userToken");
-          if (!token) {
-              Alert.alert("Session expired", "Please log in again.");
-              navigation.navigate("Login");
-              return;
-          }
+        
+        const storedName = await SecureStore.getItemAsync("userName");
+        const storedAccountID = await SecureStore.getItemAsync("accountID");
+        const storedQrID = await SecureStore.getItemAsync("qrID");
+        const storedQrData = await SecureStore.getItemAsync("qrData");
+        const storedToken = await SecureStore.getItemAsync('userToken');
 
-          const response = await fetch("https://api-bancamovil-production.up.railway.app/user/details", {
-              method: "GET",
-              headers: {
-                  "Content-Type": "application/json",
-                  Authorization: token,
-              },
-          });
+        console.log('qr_id desde route o SecureStore:', storedQrID); 
+        console.log('qr_data desde route o SecureStore:', storedQrData); 
+        console.log('Token recuperado desde SecureStore:', storedToken);
 
-          const data = await response.json();
+        if (storedToken) {
+          setName(storedName || "User");
+          setAccountID(storedAccountID);
+          setQrID(storedQrID);
+          setStoredQrId(storedQrID);
+          setStoredQrData(storedQrData);
+          setToken(storedToken);
 
-          if (data.status === 200) {
-              setName(data.name);
-              setAccountID(data.account_id);
-              setQrID(data.qr_id);
-          } else {
-              Alert.alert("Error", data.msg);
-              navigation.navigate("Login");
-          }
-      } catch (error) {
-          console.error("Error getting user details:", error);
-          Alert.alert("Error", "Try later.");
+
+        } else {
+          Alert.alert("Session expired", "Please log in again.");
           navigation.navigate("Login");
+        }
+      } catch (error) {
+        console.error("Error loading user data:", error);
+        Alert.alert("Error", "Unable to load user data.");
       }
-  };
+    };
 
-  fetchUserDetails();
-  }, []);
-
-  const handleLogout = async () => {
-    await SecureStore.deleteItemAsync("userToken");
-    await SecureStore.deleteItemAsync("accountID");
-    await SecureStore.deleteItemAsync("qrID");
-    Alert.alert("Logged out", "You have successfully logged out.");
-    navigation.navigate("Login");
-  };
+    loadUserData();
+  }, [qr_id, qr_data, token]);
 
 
   return (
@@ -70,7 +66,7 @@ export default function Home({ navigation }) {
       </TouchableOpacity> 
 
       <Text style={styles.txt_1}>Hello</Text>
-      <Text style={styles.txt_2}>Name</Text>
+      <Text style={styles.txt_2}>{name}</Text>
 
       <View style={styles.border}>
         <View style={styles.icon_1}>
@@ -82,13 +78,24 @@ export default function Home({ navigation }) {
 
       <View style={styles.button_container}>
         <View style={styles.row_container}>
-          <TouchableOpacity style={styles.button_1} onPress={() => navigation.navigate('QR_Scanner')}>
+          <TouchableOpacity style={styles.button_1} onPress={() => {console.log("userToken:", token); navigation.navigate('QR_Scanner', { token: token })}}>
             <View style={styles.icon_2}>
               <Feather name="arrow-up" size={20} color="black"/>
             </View>
             <Text style={styles.text_button}>Transfer</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button_2} onPress={() => navigation.navigate('QR')}>
+          <TouchableOpacity 
+          style={styles.button_2} 
+          onPress={() => { 
+            if (storedQrID && storedQrData) {
+              console.log("QR ID:", storedQrID); 
+              console.log("QR Data:", storedQrData);  
+              navigation.navigate('QR', { qr_id: storedQrID, qr_data: storedQrData });
+            } else {
+              Alert.alert("Error", "QR ID or data not found.");
+            }
+            }}
+            >
             <View style={styles.icon_3}>
               <MaterialCommunityIcons name="qrcode-scan" size={20} color="black"/> 
             </View> 
@@ -105,7 +112,7 @@ export default function Home({ navigation }) {
 
       <View style={styles.border_2}>
         <Text style={styles.txt_7}>Transactions</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Transactions')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Transactions', {token})}>
           <View style={styles.icon_5}>
             <Feather name="arrow-up" size={20} color="black"/>
           </View>

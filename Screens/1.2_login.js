@@ -8,47 +8,43 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
-    try {
-      const response = await fetch("https://api-bancamovil-production.up.railway.app/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
-      const data = await response.json();
-
-      if (data.status === 200) {
-        await SecureStore.setItemAsync("userToken", data.token);
+    const handleLogin = async () => {
+      try {
+        const response = await fetch("https://api-bancamovil-production.up.railway.app/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        });
+        const data = await response.json();
     
-        if (data.account_id !== undefined && data.account_id !== null) {
-            await SecureStore.setItemAsync("accountID", data.account_id.toString());
-        } else {
-            console.warn("account_id is missing in the response");
-        }
-    
-        if (data.qr_id !== undefined && data.qr_id !== null) {
-            await SecureStore.setItemAsync("qrID", data.qr_id.toString());
-        } else {
-            console.warn("qr_id is missing in the response");
-        }
+        if (data.status === 200) {
+         
+          await SecureStore.setItemAsync("userToken", String(data.token));  
+          console.log("userToken guardado:", await SecureStore.getItemAsync("userToken"));
+          await SecureStore.setItemAsync("accountID", String(data.user.account_id || "")); 
+          console.log("userToken guardado:", await SecureStore.getItemAsync("userToken"));
+          await SecureStore.setItemAsync("qrID", data.user.qr_id ? String(data.user.qr_id) : "");  
+          console.log("qrID guardado:", await SecureStore.getItemAsync("qrID"));
+          await SecureStore.setItemAsync("userName", String(data.user.name || ""));
+          console.log("userName guardado:", await SecureStore.getItemAsync("userName"));
+          await SecureStore.setItemAsync("qrData", data.user.qr_id ? String(data.user.qr_data) : "");  
+          console.log("qrData guardado:", await SecureStore.getItemAsync("qrData"));
 
-      //if (data.status === 200) {
-        Alert.alert("Successful login", "Welcome to your account.");
-        navigation.navigate("Home");
-      } else {
-        Alert.alert("Error", data.msg);
+          Alert.alert("Successful login", "Welcome to your account.");
+          navigation.navigate("Home");
+        } else {
+          Alert.alert("Error", data.msg);
+        }
+      } catch (error) {
+        console.error(error);
+        Alert.alert("Error", "Login failed, try again later.");
       }
-    } catch (error) {
-      console.error(error);
-      Alert.alert("Error", "Login failed, try again later.");
-    }
-  };
-
+    };
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("Menu")}>

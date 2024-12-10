@@ -7,10 +7,18 @@ import { Camera, CameraView } from 'expo-camera';
 import { AppState } from "react-native";
 
 
-export default function QR_Scanner({ navigation }) {
+export default function QR_Scanner({ navigation, route }) {
   const qrLock = useRef(false);
   const appState = useRef(AppState.currentState);
   const [hasPermission, setHasPermission] = useState(null);
+  const { token } = route.params;
+
+  console.log("Token recibido:", token);
+
+  useEffect(() => {
+    console.log("Token recibido en QR_Scanner:", token);
+  }, [token]);
+
 
   useEffect(() => {
     (async () => {
@@ -61,7 +69,7 @@ export default function QR_Scanner({ navigation }) {
                 {
                   text: "OK",
                   onPress: () =>
-                    navigation.navigate("Transfer", { qrData: data }),
+                    navigation.navigate("Transfer", { qrData: data, token }),
                 },
               ]);
             }

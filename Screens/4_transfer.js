@@ -6,35 +6,71 @@ import Feather from '@expo/vector-icons/Feather';
 import React, { useState } from "react";
 
 export default function Transfer({ route, navigation }) {
-  const { qrId } = route.params;
+  const { token, qrData } = route.params;
   const [amount, setAmount] = useState("");
   const [concept, setConcept] = useState("");
+  const [characterCount, setCharacterCount] = useState(0);
+
+  React.useEffect(() => {
+    console.log("Token recibido en transfer:", token);
+    console.log("QR Data recibido en transfer:", qrData);
+  }, []);
 
   const handleContinue = () => {
-    if (!amount || !concept) {
+    if (!amount || !qrData || !concept) {
+      console.log("Sending data:", {
+        amount,
+        qr_id: qrData,
+        concept,
+      });
       Alert.alert("Error", "Please fill in all fields");
       return;
     }
 
+    console.log("Sending data:", {
+      amount,
+      qr_id: qrData,
+      concept,
+    });
+
     fetch("https://api-bancamovil-production.up.railway.app/transfer", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount, concept, qr_id: qrId }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        amount,
+        qr_id: qrData,
+        concept,
+        
+      }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        Alert.alert("Success", "Transfer completed successfully", [
-          {
-            text: "OK",
-            onPress: () => navigation.navigate("QR_Vaucher"),
-          },
-        ]);
+        console.log("Data recibida:", data);
+        if (data.status === 200) {
+          Alert.alert("Success", data.msg, [
+            {
+              text: "OK",
+              onPress: () => navigation.navigate("QR_Vaucher"),
+            },
+          ]);
+        } else {
+          Alert.alert("Error", data.msg);
+        }
       })
       .catch((error) => {
-        console.error(error);
-        Alert.alert("Error", "Something went wrong.");
+        console.error("Error:", error);
+        Alert.alert("Error", "Something went wrong. Please try again later.");
       });
+  };
+
+  const handleConceptChange = (text) => {
+    if (text.length <= 40) {
+      setConcept(text);
+      setCharacterCount(text.length);
+    }
   };
 
   return (
@@ -59,6 +95,9 @@ export default function Transfer({ route, navigation }) {
             placeholder="              $0 MXN"
             placeholderTextColor="#ffffff"
             keyboardType="numeric"
+            value={amount}
+            onChangeText={(text) => setAmount(text)}
+
         ></TextInput>
         
         <Text style={styles.txt_3}>Reference</Text>
@@ -76,6 +115,8 @@ export default function Transfer({ route, navigation }) {
             style={styles.input_2}
             placeholderTextColor="#ffffff"
             keyboardType="default"
+            value={concept} 
+            onChangeText={handleConceptChange}
         ></TextInput>
 
         <View style={styles.row_container}>
@@ -83,7 +124,7 @@ export default function Transfer({ route, navigation }) {
           <Text style={styles.txt_6}>0/40</Text>
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('QR_Vaucher')}>
+        <TouchableOpacity style={styles.button} onPress={handleContinue}>
             <Text style={styles.text_button}>Continue</Text>
         </TouchableOpacity>
 
