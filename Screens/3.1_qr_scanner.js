@@ -1,7 +1,6 @@
 // La funcionalidad de el boton y el QR, validar QR para ir a la screen QR_Vaucher
 
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar, Alert} from "react-native";
-import Feather from '@expo/vector-icons/Feather';
 import React, { useEffect, useState, useRef } from "react";
 import { Camera, CameraView } from 'expo-camera';
 import { AppState } from "react-native";

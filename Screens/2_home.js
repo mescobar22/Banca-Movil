@@ -84,6 +84,7 @@ export default function Home({ navigation, route }) {
             </View>
             <Text style={styles.text_button}>Transfer</Text>
           </TouchableOpacity>
+
           <TouchableOpacity 
           style={styles.button_2} 
           onPress={() => { 
@@ -99,15 +100,9 @@ export default function Home({ navigation, route }) {
             <View style={styles.icon_3}>
               <MaterialCommunityIcons name="qrcode-scan" size={20} color="black"/> 
             </View> 
-            <Text style={styles.text_button}>QR Scanner</Text>
+            <Text style={styles.text_button}>My QR</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.button_3} onPress={() => navigation.navigate('QR')}>
-          <View style={styles.icon_4}>
-            <MaterialCommunityIcons name="account-details" size={24} color="black"/>
-          </View> 
-          <Text style={styles.text_button}>Account</Text>
-        </TouchableOpacity>
       </View>
 
       <View style={styles.border_2}>
@@ -178,7 +173,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     width: "110%",
     borderRadius: 10,
-    marginBottom: 270,
+    marginBottom: 310,
   },
   icon_1: {
     position: "absolute",

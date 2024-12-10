@@ -30,28 +30,21 @@ export default function QR({ navigation, route }) {
         
         <Text style={styles.txt_3}>My QR</Text>
           <View style={styles.icon_1}>
-            <MaterialCommunityIcons name="qrcode-scan" size={200} color="white" />
+            <MaterialCommunityIcons name="qrcode-scan" size={235} color="#001b48" />
           </View>
-          <View style={styles.container}>
+          <View style={styles.qr}>
             {qr_data ? (
               <>
               <QRCode
                value={qr_id} //Contenido del QR
                size={200}      
                backgroundColor="white"
-               color="#001b48"
+               color="#000000"
                />
                </>
                ) : (
                <Text style={styles.errorTxt}>No QR data available to generate a QR code.</Text>)}
-            </View>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('QR_Scanner')}>
-            <View style={styles.icon_2}>
-              <Feather name="arrow-right" size={24} color="#001b48"/>
-            </View>
-            <Text style={styles.text_button}>Start</Text>
-        </TouchableOpacity>
-
+          </View>
         <StatusBar style="auto" />
     </View>
     );
@@ -102,21 +95,21 @@ const styles = StyleSheet.create({
   },
   icon_1: {
     position: "absolute",
-    bottom:245,
+    bottom:200,
     alignItems: "center",
     width: "100%",
   },
   qr: {
-    marginTop: 25,  
+    position: "absolute",
+    bottom: 220,
   },
   button: {
-    marginTop: 110,
+    marginTop: 300,
     backgroundColor: "#ffffff",
     alignItems: "center",
     borderRadius: 25,
     width: "120%",
     padding: 15,
-    marginBottom: 20,
   },
   icon_2: {
     position: "absolute",
