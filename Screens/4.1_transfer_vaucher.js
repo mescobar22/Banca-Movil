@@ -1,10 +1,17 @@
-// Depende de si la transacción realmente se realizo mostrar la confirmación o su rechazo y la cnatidad recibida, que se suma a la de la base de datos para aparecer en home
-
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar} from "react-native";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
+import React, { useEffect } from "react";
 
-export default function Transfer_Vaucher({ navigation }) {
+export default function Transfer_Vaucher({ route, navigation }) {
+  const { amount } = route.params || { amount: 0 };
+  
+
+  React.useEffect(() => {
+    console.log("Params recibidos en QR_Vaucher:", route.params);
+  }, [route.params]);
+
+ 
   return (
     <View style={styles.container}>
       <View style={styles.border}>
@@ -12,7 +19,7 @@ export default function Transfer_Vaucher({ navigation }) {
           <AntDesign name="checkcircle" size={70} color="#001b48"/>
         </View>
         <Text style={styles.txt_1}>You have transferred</Text>
-        <Text style={styles.txt_2}>$1000.00</Text>
+        <Text style={styles.txt_2}>${amount.toFixed(2)}</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Transactions')}>
           <Text style={styles.txt_3}>See receipt</Text>
         </TouchableOpacity>

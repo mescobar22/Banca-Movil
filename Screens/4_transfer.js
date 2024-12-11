@@ -1,5 +1,3 @@
-// Validar el boton continue y hacer un contador de la cantidad de letras, 0/40. Aun falta que guarde los datos.
-
 import { Text, TouchableOpacity, TextInput, View, StyleSheet, StatusBar, Alert } from "react-native";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Feather from '@expo/vector-icons/Feather';
@@ -53,7 +51,7 @@ export default function Transfer({ route, navigation }) {
           Alert.alert("Success", data.msg, [
             {
               text: "OK",
-              onPress: () => navigation.navigate("QR_Vaucher"),
+              onPress: () => navigation.navigate("QR_Vaucher", {amount: amount}),
             },
           ]);
         } else {
@@ -96,7 +94,7 @@ export default function Transfer({ route, navigation }) {
             placeholderTextColor="#ffffff"
             keyboardType="numeric"
             value={amount}
-            onChangeText={(text) => setAmount(text)}
+            onChangeText={(text) => {setAmount(text)}}
 
         ></TextInput>
         

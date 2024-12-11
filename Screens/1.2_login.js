@@ -25,15 +25,18 @@ export default function Login({ navigation }) {
         if (data.status === 200) {
          
           await SecureStore.setItemAsync("userToken", String(data.token));  
-          console.log("userToken guardado:", await SecureStore.getItemAsync("userToken"));
+          //console.log("userToken:", await SecureStore.getItemAsync("userToken"));
           await SecureStore.setItemAsync("accountID", String(data.user.account_id || "")); 
-          console.log("userToken guardado:", await SecureStore.getItemAsync("userToken"));
+          //console.log("userToken:", await SecureStore.getItemAsync("userToken"));
           await SecureStore.setItemAsync("qrID", data.user.qr_id ? String(data.user.qr_id) : "");  
-          console.log("qrID guardado:", await SecureStore.getItemAsync("qrID"));
+          //console.log("qrID:", await SecureStore.getItemAsync("qrID"));
           await SecureStore.setItemAsync("userName", String(data.user.name || ""));
-          console.log("userName guardado:", await SecureStore.getItemAsync("userName"));
+          //console.log("userName:", await SecureStore.getItemAsync("userName"));
           await SecureStore.setItemAsync("qrData", data.user.qr_id ? String(data.user.qr_data) : "");  
-          console.log("qrData guardado:", await SecureStore.getItemAsync("qrData"));
+          //console.log("qrData:", await SecureStore.getItemAsync("qrData"));
+          const lastLoginDate = data.user.last_login ? String(data.user.last_login) : "No disponible";
+          await SecureStore.setItemAsync("lastLoginDate", lastLoginDate);
+          //console.log("lastLoginDate:", await SecureStore.getItemAsync("lastLoginDate"));
 
           Alert.alert("Successful login", "Welcome to your account.");
           navigation.navigate("Home");

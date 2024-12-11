@@ -1,8 +1,3 @@
-// En "Name" debe de ir el nombre del usuario, junto con la fecha de la ultima transaccion en "Last login", el dinero debe ser basado en lo que hay en la base de datos
-//En el boton Transfer tuve que cambiar a la ventana de escaneo porque 
-//Para hacer la transferencia se ocupan amount, concept y qr_id y sin esta ultima
-//no me dejaba continuar en la ventana Transfer.
-
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar, Alert} from "react-native";
 import Entypo from '@expo/vector-icons/Entypo';
 import Feather from '@expo/vector-icons/Feather';
@@ -12,11 +7,13 @@ import React, { useState, useEffect } from "react";
 
 
 export default function Home({ navigation, route }) {
-  const [name, setName] = useState(null);
+  const [storedName, setStoredName] = useState(null);
   const [accountID, setAccountID] = useState(null);
   const [qrID, setQrID] = useState(null);
   const [storedQrID, setStoredQrId] = useState(null);
   const [storedQrData, setStoredQrData] = useState(null);
+  const [balance, setBalance] = useState(0); // Estado para el balance
+  const [StoredLastLogin, setStoredLastLogin] = useState('');
   const [token, setToken] = useState(null);
 
   const { qr_id, qr_data} = route.params || {};
@@ -31,20 +28,39 @@ export default function Home({ navigation, route }) {
         const storedQrID = await SecureStore.getItemAsync("qrID");
         const storedQrData = await SecureStore.getItemAsync("qrData");
         const storedToken = await SecureStore.getItemAsync('userToken');
+        const StoredLastLogin = await SecureStore.getItemAsync("lastLoginDate");
 
-        console.log('qr_id desde route o SecureStore:', storedQrID); 
-        console.log('qr_data desde route o SecureStore:', storedQrData); 
-        console.log('Token recuperado desde SecureStore:', storedToken);
+        //console.log('qr_id desde route o SecureStore:', storedQrID); 
+        //console.log('qr_data desde route o SecureStore:', storedQrData); 
+        //console.log('Token recuperado desde SecureStore:', storedToken);
+        //console.log('nombre recuperado desde SecureStore:', storedName);
 
         if (storedToken) {
-          setName(storedName || "User");
+          setStoredName(storedName);
           setAccountID(storedAccountID);
           setQrID(storedQrID);
           setStoredQrId(storedQrID);
           setStoredQrData(storedQrData);
           setToken(storedToken);
+          setStoredLastLogin(StoredLastLogin);
 
+          
+          const response = await fetch(
+            "https://api-bancamovil-production.up.railway.app/transactions",
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${storedToken}`,
+              },
+            }
+          );
+          const data = await response.json();
 
+          if (data.balance) setBalance(data.balance);
+          if (data.last_transaction_date)
+            setLastLoginDate(
+              new Date(data.last_transaction_date).toLocaleDateString()
+            );
         } else {
           Alert.alert("Session expired", "Please log in again.");
           navigation.navigate("Login");
@@ -66,14 +82,18 @@ export default function Home({ navigation, route }) {
       </TouchableOpacity> 
 
       <Text style={styles.txt_1}>Hello</Text>
-      <Text style={styles.txt_2}>{name}</Text>
+      <Text style={styles.txt_2}>{storedName}</Text>
+
+      {StoredLastLogin && (
+        <Text style={styles.txt_9}>Last Login: {StoredLastLogin}</Text>
+      )}
 
       <View style={styles.border}>
         <View style={styles.icon_1}>
           <Entypo name="wallet" size={50} color="#001b48"/>
         </View>
         <Text style={styles.txt_3}>Available Balance</Text>
-        <Text style={styles.txt_4}>$200,000 MXN</Text>
+        <Text style={styles.txt_4}>${balance.toLocaleString()} MXN</Text>
       </View>
 
       <View style={styles.button_container}>
@@ -107,7 +127,7 @@ export default function Home({ navigation, route }) {
 
       <View style={styles.border_2}>
         <Text style={styles.txt_7}>Transactions</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Transactions', {token})}>
+        <TouchableOpacity onPress={() => navigation.navigate('Transactions', {token: token})}>
           <View style={styles.icon_5}>
             <Feather name="arrow-up" size={20} color="black"/>
           </View>
@@ -153,9 +173,10 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   txt_2: {
-    fontSize: 25,
+    fontSize: 30,
     color: "#ffffff",
     marginBottom: 70,
+    fontWeight: "bold",
   },
   txt_3: {
     marginTop: 20,
@@ -172,8 +193,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#ffffff",
     width: "110%",
-    borderRadius: 10,
-    marginBottom: 310,
+    borderRadius: 15,
+    marginTop: 20,
+    marginBottom: 305,
+    
   },
   icon_1: {
     position: "absolute",
@@ -190,8 +213,9 @@ const styles = StyleSheet.create({
     color: "#001b48",
     fontWeight: "bold",
     fontSize: 36,
-    marginTop: -5,
+    marginTop: -2,
     marginStart: 55,
+    alignItems: "center"
   },
   button_container: {
     flexDirection: "column",
@@ -256,7 +280,7 @@ const styles = StyleSheet.create({
     width: "140%",
     borderTopLeftRadius: 80,
     borderTopRightRadius: 80,
-    padding: 20,
+    padding: 45,
     marginBottom: -40,
   },
   txt_7: {
@@ -275,5 +299,13 @@ const styles = StyleSheet.create({
     color: "#001b48",
     textDecorationLine: "underline",
     fontWeight: "bold",
+  },
+
+  txt_9: {
+    fontSize: 18,
+    marginTop: -40,
+    
+    color: '#ffffff',
+    textAlign: 'center',
   },
 });

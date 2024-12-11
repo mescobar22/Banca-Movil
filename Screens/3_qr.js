@@ -1,5 +1,3 @@
-//Al agregar los datos con la API dejo de generar el codigo y no logre hacerlo funcionar
-
 import { Text, TouchableOpacity, View, StyleSheet, StatusBar, Image} from "react-native";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Feather from '@expo/vector-icons/Feather';
@@ -36,7 +34,7 @@ export default function QR({ navigation, route }) {
             {qr_data ? (
               <>
               <QRCode
-               value={qr_id} //Contenido del QR
+               value={qr_id}
                size={200}      
                backgroundColor="white"
                color="#000000"

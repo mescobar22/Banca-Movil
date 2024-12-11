@@ -1,38 +1,75 @@
-const { SELECT } = require("sequelize/lib/query-types");
 const connect = require("../db");
-const router = require("./usuarios");
-const authVerify = require("../middleware/authVerify");
+const express = require('express');
+const authVerify = require('../middleware/authVerify');
+const router = express.Router(); 
 
-router.get('/transactions/history', authVerify, async (req, res) => {
+router.post('/transfer', authVerify, async (req, res) => {
+    const{amount, qr_id, concept} = req.body;
     let db;
-    try {
+
+    try{
+        if(!amount || !qr_id || !concept) {
+            return res.json ({
+                'status': 400,
+                'msg': 'All fields are required'
+            });
+        }
+
         db = await connect();
 
-        const query =
-        `SELECT * FROM transactions WHERE accound_id = ? AND transaction_type = ? ORDER BY created_at DESC`;
 
-        const [transactions] = await db.execute(query, [req.user.account_id]);
+        const queryReceiverAccount = `SELECT account_id FROM qr_codes WHERE qr_id = ?`;
+        const [receiverAccount] = await db.execute(queryReceiverAccount, [qr_id]);
+        
 
-        if(transactions.length === 0) {
+        if (receiverAccount.length === 0) {
             return res.json({
-                'status':404,
-                'msg': 'No transactions found in this account'
-
+                'status': 400,
+                'msg': 'The QR code does not correspond to any account'
             });
-        } res.json({
+        }
+
+
+        const receiverAccountId = receiverAccount[0].account_id;
+        
+
+        await db.beginTransaction();
+        
+
+        try{
+            const queryTransfer = `INSERT INTO transfers (from_account_id, to_account_id, amount) VALUES (?, ?, ?)`;
+            await db.execute(queryTransfer, [req.user_id, receiverAccountId, amount]);
+
+            const querySenderTrans = `INSERT INTO transactions (account_id, type, amount, concept, reference, created_at) VALUES (?, 'Transfer', ?, ?, ?, NOW())`;
+            await db.execute(querySenderTrans, [req.user_id, amount, concept, qr_id]);
+
+            const queryReceiverTrans = `INSERT INTO transactions (account_id, type, amount, concept, reference, created_at) VALUES (?, 'Receive', ?, ?, ?, NOW())`;
+            await db.execute(queryReceiverTrans, [receiverAccountId, amount, concept, qr_id]);
+
+            await db.commit();
+
+
+        res.json({
             'status':200,
-            'msg': 'Transaction history',
-            'transactions': transactions
+            'msg': 'Transfer completed successfully'
         });
 
+    } catch(err) {
+        console.error('Transaction error:', err); 
+        await db.rollback();
+        res.json({
+            'status': 500,
+            'msg': 'Error processing the transfer. Try again later.'
+        });
+    }
     } catch(err){
         console.error(err);
         res.json({
-            'status':500,
+            'status': 500,
             'msg': 'Server error'
         });
     }
-
 });
 
+  
 module.exports = router;
